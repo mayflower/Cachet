@@ -12,7 +12,7 @@
 namespace CachetHQ\Cachet\Exceptions\Displayers;
 
 use Exception;
-use GrahamCampbell\Exceptions\Displayers\DisplayerInterface;
+use GrahamCampbell\Exceptions\Displayer\DisplayerInterface;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
@@ -47,7 +47,7 @@ class RedirectDisplayer implements DisplayerInterface
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function display(Exception $exception, string $id, int $code, array $headers)
+    public function display(\Throwable $exception, string $id, int $code, array $headers)
     {
         return redirect()->guest('auth/login');
     }
@@ -71,7 +71,7 @@ class RedirectDisplayer implements DisplayerInterface
      *
      * @return bool
      */
-    public function canDisplay(Exception $original, Exception $transformed, int $code)
+    public function canDisplay(\Throwable $original, \Throwable $transformed, int $code)
     {
         $redirect = $transformed instanceof HttpExceptionInterface && $transformed->getStatusCode() === 401;
 

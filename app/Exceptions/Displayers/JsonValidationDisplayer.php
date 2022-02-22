@@ -13,12 +13,32 @@ namespace CachetHQ\Cachet\Exceptions\Displayers;
 
 use AltThree\Validator\ValidationException;
 use Exception;
-use GrahamCampbell\Exceptions\Displayers\DisplayerInterface;
-use GrahamCampbell\Exceptions\Displayers\JsonDisplayer;
+use GrahamCampbell\Exceptions\Displayer\DisplayerInterface;
+use GrahamCampbell\Exceptions\Displayer\AbstractJsonDisplayer;
+use GrahamCampbell\Exceptions\Information\InformationInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class JsonValidationDisplayer extends JsonDisplayer implements DisplayerInterface
+class JsonValidationDisplayer extends AbstractJsonDisplayer implements DisplayerInterface
 {
+    /**
+     * The exception information instance.
+     *
+     * @var \GrahamCampbell\Exceptions\Information\InformationInterface
+     */
+    private $info;
+
+    /**
+     * Create a new json displayer instance.
+     *
+     * @param \GrahamCampbell\Exceptions\Information\InformationInterface $info
+     *
+     * @return void
+     */
+    public function __construct(InformationInterface $info)
+    {
+        $this->info = $info;
+    }
+
     /**
      * Get the error response associated with the given exception.
      *
@@ -29,7 +49,7 @@ class JsonValidationDisplayer extends JsonDisplayer implements DisplayerInterfac
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function display(Exception $exception, string $id, int $code, array $headers)
+    public function display(\Throwable $exception, string $id, int $code, array $headers)
     {
         $info = $this->info->generate($exception, $id, 400);
 
@@ -47,8 +67,13 @@ class JsonValidationDisplayer extends JsonDisplayer implements DisplayerInterfac
      *
      * @return bool
      */
-    public function canDisplay(Exception $original, Exception $transformed, int $code)
+    public function canDisplay(\Throwable $original, \Throwable $transformed, int $code)
     {
         return $transformed instanceof ValidationException;
+    }
+
+    public function contentType()
+    {
+        return 'application/json';
     }
 }

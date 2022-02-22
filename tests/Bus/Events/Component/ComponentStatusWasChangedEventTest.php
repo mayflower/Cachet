@@ -15,7 +15,7 @@ use CachetHQ\Cachet\Bus\Events\Component\ComponentStatusWasChangedEvent;
 use CachetHQ\Cachet\Models\Component;
 use CachetHQ\Cachet\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use MailThief\Testing\InteractsWithMail;
+use Illuminate\Support\Facades\Mail;
 
 /**
  * This is the component status was changed event test.
@@ -25,10 +25,10 @@ use MailThief\Testing\InteractsWithMail;
 class ComponentStatusWasChangedEventTest extends AbstractComponentEventTestCase
 {
     use DatabaseMigrations;
-    use InteractsWithMail;
 
     public function testComponentUpdateEmailWasSent()
     {
+        Mail::fake();
         $user = factory('CachetHQ\Cachet\Models\User')->create();
 
         $component = factory('CachetHQ\Cachet\Models\Component')->create([
@@ -41,7 +41,7 @@ class ComponentStatusWasChangedEventTest extends AbstractComponentEventTestCase
 
         $subscriber->subscriptions()->create(['component_id' => $component->id]);
 
-        $this->app['events']->fire(new ComponentStatusWasChangedEvent($user, $component, 1, 2, false));
+        $this->app['events']->dispatch(new ComponentStatusWasChangedEvent($user, $component, 1, 2, false));
 
         $this->seeMessageFor($subscriber->email);
         $this->seeMessageWithSubject(trans('notifications.component.status_update.mail.subject'));

@@ -133,9 +133,9 @@ if (!function_exists('cachet_route_generator')) {
      *
      * @return string
      */
-    function cachet_route_generator($name, $method = 'get', $domain = 'core')
+    function cachet_route_generator($name, $method = 'get')
     {
-        return "{$domain}::{$method}:{$name}";
+        return "{$method}:{$name}";
     }
 }
 
@@ -150,10 +150,10 @@ if (!function_exists('cachet_route')) {
      *
      * @return string
      */
-    function cachet_route($name, $parameters = [], $method = 'get', $domain = 'core')
+    function cachet_route($name, $parameters = [], $method = 'get')
     {
         return app('url')->route(
-            cachet_route_generator($name, $method, $domain),
+            cachet_route_generator($name, $method),
             $parameters,
             true
         );
@@ -173,9 +173,9 @@ if (!function_exists('cachet_redirect')) {
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    function cachet_redirect($name, $parameters = [], $status = 302, $headers = [], $method = 'get', $domain = 'core')
+    function cachet_redirect($name, $parameters = [], $status = 302, $headers = [], $method = 'get')
     {
-        $url = cachet_route($name, $parameters, $method, $domain);
+        $url = cachet_route($name, $parameters, $method);
 
         return app('redirect')->to($url, $status, $headers);
     }
