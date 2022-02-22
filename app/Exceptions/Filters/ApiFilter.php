@@ -22,13 +22,13 @@ class ApiFilter
      *
      * @param \GrahamCampbell\Exceptions\Displayers\DisplayerInterface[] $displayers
      * @param \Illuminate\Http\Request                                   $request
-     * @param \Exception                                                 $original
-     * @param \Exception                                                 $transformed
+     * @param \Throwable                                                 $original
+     * @param \Throwable                                                 $transformed
      * @param int                                                        $code
      *
      * @return \GrahamCampbell\Exceptions\Displayers\DisplayerInterface[]
      */
-    public function filter(array $displayers, Request $request, Exception $original, Exception $transformed, int $code)
+    public function filter(array $displayers, Request $request, \Throwable $original, \Throwable $transformed, int $code)
     {
         if ($request->is('api*')) {
             foreach ($displayers as $index => $displayer) {

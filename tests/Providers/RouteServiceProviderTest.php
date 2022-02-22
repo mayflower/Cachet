@@ -34,12 +34,12 @@ class RouteServiceProviderTest extends AbstractTestCase
     public function testWhenAlwaysAuthenticateIsEnabledLoginRoutesAreWhiteListed()
     {
         $loginRoutes = [
-            'core::get:auth.login',
-            'core::post:auth.login',
-            'core::post:auth.two-factor',
-            'core::get:auth.logout',
-            'core::get:signup.invite',
-            'core::post:signup.invite',
+            'get:auth.login',
+            'post:auth.login',
+            'post:auth.two-factor',
+            'get:auth.logout',
+            'get:signup.invite',
+            'post:signup.invite',
         ];
 
         $this->assertRoutesDontHaveAuthMiddleware($loginRoutes, $this->bootRouter(true));
@@ -51,10 +51,10 @@ class RouteServiceProviderTest extends AbstractTestCase
     public function testWhenAlwaysAuthenticateIsEnabledSetupRoutesAreWhiteListed()
     {
         $loginRoutes = [
-            'core::get:setup',
-            'core::post:setup.step1',
-            'core::post:setup.step2',
-            'core::post:setup.step3',
+            'get:setup',
+            'post:setup.step1',
+            'post:setup.step2',
+            'post:setup.step3',
         ];
 
         $this->assertRoutesDontHaveAuthMiddleware($loginRoutes, $this->bootRouter(true));
@@ -121,17 +121,17 @@ class RouteServiceProviderTest extends AbstractTestCase
     public function testWhenAlwaysAuthenticateIsEnabledAllNormalRoutesAreAuthenticated()
     {
         $namedRoutes = [
-            'core::get:status-page',
-            'core::get:incident',
-            'core::get:schedule',
-            'core::get:metric',
-            'core::get:component_shield',
-            'core::get:subscribe',
-            'core::post:subscribe',
-            'core::get:subscribe.manage',
-            'core::post:subscribe.manage',
-            'core::get:subscribe.verify',
-            'core::get:subscribe.unsubscribe',
+            'get:status-page',
+            'get:incident',
+            'get:schedule',
+            'get:metric',
+            'get:component_shield',
+            'get:subscribe',
+            'post:subscribe',
+            'get:subscribe.manage',
+            'post:subscribe.manage',
+            'get:subscribe.verify',
+            'get:subscribe.unsubscribe',
         ];
 
         $this->assertRoutesHaveAuthMiddleware($namedRoutes, $this->bootRouter(true));
@@ -144,17 +144,17 @@ class RouteServiceProviderTest extends AbstractTestCase
     public function testWhenAlwaysAuthenticateIsDisabledAllNormalRoutesAreUnauthenticated()
     {
         $namedRoutes = [
-            'core::get:status-page',
-            'core::get:incident',
-            'core::get:schedule',
-            'core::get:metric',
-            'core::get:component_shield',
-            'core::get:subscribe',
-            'core::post:subscribe',
-            'core::get:subscribe.manage',
-            'core::post:subscribe.manage',
-            'core::get:subscribe.verify',
-            'core::get:subscribe.unsubscribe',
+            'get:status-page',
+            'get:incident',
+            'get:schedule',
+            'get:metric',
+            'get:component_shield',
+            'get:subscribe',
+            'post:subscribe',
+            'get:subscribe.manage',
+            'post:subscribe.manage',
+            'get:subscribe.verify',
+            'get:subscribe.unsubscribe',
         ];
 
         $this->assertRoutesDontHaveAuthMiddleware($namedRoutes, $this->bootRouter(false));

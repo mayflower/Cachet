@@ -170,17 +170,18 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
+        GrahamCampbell\Exceptions\ExceptionsServiceProvider::class,
+
         /*
          * Packages Service Providers...
          */
         env('APP_DEBUG') ? Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class : null,
-        Barryvdh\Cors\ServiceProvider::class,
+        Fruitcake\Cors\CorsServiceProvider::class,
         env('APP_DEBUG') ? Barryvdh\Debugbar\ServiceProvider::class : null,
         CachetHQ\Badger\BadgerServiceProvider::class,
         CachetHQ\Emoji\EmojiServiceProvider::class,
         CachetHQ\Twitter\TwitterServiceProvider::class,
         GrahamCampbell\Binput\BinputServiceProvider::class,
-        GrahamCampbell\Exceptions\ExceptionsServiceProvider::class,
         GrahamCampbell\Markdown\MarkdownServiceProvider::class,
         GrahamCampbell\Security\SecurityServiceProvider::class,
         Jenssegers\Date\DateServiceProvider::class,
@@ -215,6 +216,7 @@ return [
     'aliases' => [
 
         'App'          => Illuminate\Support\Facades\App::class,
+        'Arr'          => Illuminate\Support\Arr::class,
         'Artisan'      => Illuminate\Support\Facades\Artisan::class,
         'Auth'         => Illuminate\Support\Facades\Auth::class,
         'Blade'        => Illuminate\Support\Facades\Blade::class,
