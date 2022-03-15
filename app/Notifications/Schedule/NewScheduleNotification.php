@@ -57,7 +57,7 @@ class NewScheduleNotification extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['mail', 'nexmo', 'slack'];
+        return ['mail', 'slack'];
     }
 
     /**
